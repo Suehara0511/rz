@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+token.pickle
+credentials.json
+client_secret*.json
+service_account*.json
+*.env
