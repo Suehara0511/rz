@@ -1,0 +1,54 @@
+Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\google\auth\_default.py:76: UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the following page for troubleshooting: https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+Traceback (most recent call last):
+  File "Z:\Users\suehara\Documents\python\analysis\auto\run_seiyaku_tanka_update.py", line 3, in <module>
+    runpy.run_path("★BQ-成約単価更新.py", run_name="__main__")
+  File "<frozen runpy>", line 291, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "★BQ-成約単価更新.py", line 102, in <module>
+    write_to_sheets(adinfoA_values, [
+  File "★BQ-成約単価更新.py", line 79, in write_to_sheets
+    ps.update_ss(spreadsheet_id, range_name, data, service)
+  File "Z:\Users\suehara\Documents\python\analysis\auto\python_ss\python_ss.py", line 63, in update_ss
+    ).execute()
+      ^^^^^^^^^
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\googleapiclient\http.py", line 923, in execute
+    resp, content = _retry_request(
+                    ^^^^^^^^^^^^^^^
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\googleapiclient\http.py", line 222, in _retry_request
+    raise exception
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\google_auth_httplib2.py", line 218, in request
+    response, content = self.http.request(
+                        ^^^^^^^^^^^^^^^^^^
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\httplib2\__init__.py", line 1724, in request
+    (response, content) = self._request(
+                          ^^^^^^^^^^^^^^
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\httplib2\__init__.py", line 1444, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\Users\suehara\Documents\python\analysis\.venv\Lib\site-packages\httplib2\__init__.py", line 1367, in _conn_request
+    conn.request(method, request_uri, body, headers)
+  File "C:\Users\suehara\AppData\Local\anaconda3\Lib\http\client.py", line 1286, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\suehara\AppData\Local\anaconda3\Lib\http\client.py", line 1332, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\suehara\AppData\Local\anaconda3\Lib\http\client.py", line 1281, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\suehara\AppData\Local\anaconda3\Lib\http\client.py", line 1080, in _send_output
+    self.send(chunk)
+  File "C:\Users\suehara\AppData\Local\anaconda3\Lib\http\client.py", line 1002, in send
+    self.sock.sendall(data)
+  File "C:\Users\suehara\AppData\Local\anaconda3\Lib\ssl.py", line 1274, in sendall
+    v = self.send(byte_view[count:])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\suehara\AppData\Local\anaconda3\Lib\ssl.py", line 1243, in send
+    return self._sslobj.write(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: The write operation timed out
