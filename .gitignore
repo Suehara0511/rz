@@ -1,4 +1,4 @@
-﻿.venv/
+.venv/
 __pycache__/
 .ipynb_checkpoints/
 *.pyc
@@ -10,7 +10,7 @@ service_account*.json
 *.env
 auto/logs/
 
-# 繝・・繧ｿ繝輔ぃ繧､繝ｫ繝ｻ繧ｭ繝｣繝・す繝･(蛟呵｣懆・・莨∵･ｭ縺ｮ螳溘ョ繝ｼ繧ｿ繧貞性縺ｿ縺・ｋ縺溘ａ霑ｽ霍｡蟇ｾ雎｡螟・
+# データファイル・キャッシュ(候補者・企業の実データを含みうるため追跡対象外)
 *.xlsx
 *.parquet
 ~$*
