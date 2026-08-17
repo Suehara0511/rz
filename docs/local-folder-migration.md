@@ -7,6 +7,20 @@
 - `Z:\Users\suehara\Documents\python\analysis`: 本来の作業フォルダ。`token.pickle`・`python_ss\credentials.json`・`.venv`が実在。**git管理下にはない**。
 - `Z:\Users\suehara\Documents\GitHub\rz`: 本リポジトリ(`suehara0511/rz`)のクローン。認証情報・`.venv`は含まれない。
 
+### Step 0(バックアップ)実行時に判明した`analysis`フォルダの実態(2026-08-17)
+
+ユーザーが取得したrobocopyログから、想定より広範囲のファイルが`analysis`直下に存在することが判明した。
+
+- ルート直下・`yojitu`配下に、候補者・企業の実データを含みうる大容量xlsxファイルが多数(`honkosho.xlsx`32MB、`index.xlsx`6MB、`yomi.xlsx`5MBなど)。
+- `_pipeline_cache`配下にparquetキャッシュ。
+- `python_ss`フォルダがルート直下・`auto`配下・`yojitu`配下の3箇所に重複(CLAUDE.mdの既存記載と一致)、各々に`credentials.json`・`token.pickle`に加え`token.json`(別形式のトークンファイル、従来の`.gitignore`は未対応だった)。
+- ルート直下に`★BQ-*.ipynb`など開発用ノートブック多数(CLAUDE.mdが言及する「本来の開発場所」)。
+- `.claude/`フォルダ(Claude Code のローカル設定)。
+
+これを受けて`.gitignore`に`*.xlsx`・`*.parquet`・`~$*`・`token.json`・`_pipeline_cache/`を追加済み(2026-08-17、本ドキュメントの更新と同時にpush)。`git checkout`自体はリポジトリに存在しないファイルには触れないため直ちに危険ではないが、この後`git add -A`のような操作で大容量・機密性の高いファイルが誤って追跡・pushされるのを防ぐための事前対応。
+
+**ノートブックの扱いについてはユーザーに確認済み(2026-08-17)**: セル出力に実データが埋め込まれている可能性を提示した上で、「社内限定運用のため気にせずそのまま含める」との判断。よって`*.ipynb`は`.gitignore`に追加しない。ルート直下・`yojitu`配下のノートブック群は、Step 2(`git checkout`)の後、通常の`git add`でリポジトリに取り込む対象とする。
+
 ### タスクスケジューラ5タスクの実行パス(XML確認済み)
 
 5タスクとも同一パターンで、Command欄に以下の絶対パスを直書きしている。
@@ -84,29 +98,55 @@ git checkout -b main origin/main
   3. ローカル側(analysis実体)が正しければ、同様に一時退避→チェックアウト成功後、退避したファイルの中身を戻す(`git status`で「modified」と出るはずなので、内容を確認の上 `git add` → `git commit` してリポジトリ側にも反映する)。
   - 想定される衝突箇所: CLAUDE.mdに記載のある「root ipynbとauto/.pyの乖離」と同種のもの(auto配下の`.py`がanalysis側でだけ更新されている等)。
 
-### Step 3. クリーンな状態の確認
+### Step 3. 状態の確認
+
 ```powershell
 git status
 git status --ignored
 git remote -v
 ```
-- `git status`が“nothing to commit, working tree clean”になっていること。
-- `git status --ignored`で、`token.pickle`・`python_ss\credentials.json`(または実際の置き場所)・`.venv\`・`auto\logs\*.log`が「Ignored files」として出ていること(除外設定が効いている確認)。
+
+- `auto/*.py`・`docs/`・`CLAUDE.md`・`.gitignore`など、既存リポジトリに記録済みのファイルについては、変更なしで表示されること(差分があればStep 2の対処が必要)。
+- 一方、**`git status`は「nothing to commit, working tree clean」にはならない**。§1.5で判明した通り、`analysis`にはまだ一度もリポジトリにコミットされていないファイル(ルート・`yojitu`配下のノートブック群、`pyproject.toml`・`poetry.lock`、`.claude/`など)が多数あり、これらは「Untracked files」としてずらっと表示されるのが正常。
+- `git status --ignored`で、`token.pickle`・`token.json`・`credentials.json`・`.venv\`・`*.xlsx`・`*.parquet`・`auto\logs\*.log`が「Ignored files」として出ていること(除外設定が効いている確認)。
 - `git remote -v`でoriginが`https://github.com/Suehara0511/rz`になっていること。
 
-### Step 4. 動作確認
+### Step 4. 新規ファイルの取り込み(この統合で初めてgit管理下に置くもの)
+
+**ここで`git add -A`のような一括追加はしない。** Untracked filesの一覧を見て、意図したものだけを個別に(またはフォルダ単位で)`git add`する。
+
+- 追加してよいもの(既知のTODOにも合致):
+  ```powershell
+  git add pyproject.toml poetry.lock
+  ```
+- ノートブック(§1.5でユーザー確認済み、社内限定運用のためそのまま含める方針):
+  ```powershell
+  git add "★BQ-RZKPI更新.ipynb" "★BQ-RZKPI更新　年収付加.ipynb" "★BQ-SMAP候補者抽出.ipynb" "★BQ-アンタッチャ.ipynb" "★BQ-初期交渉からの生産性.ipynb" "★BQ-営業生産性.ipynb" "★BQ-成約単価更新.ipynb" "★BQ-転機ALLデータ更新.ipynb" "★RZデータ抽出.ipynb" "★事業予測モデル.ipynb" "★自社Sデータ更新.ipynb"
+  git add yojitu/
+  ```
+  (`.bak`・`.backup.ipynb`サフィックスのファイルも、変更前バックアップとして残す運用なのでそのまま追加してよい。`.ipynb_checkpoints/`・`__pycache__/`は`.gitignore`済みなので追加対象に出てこない。)
+- `.claude/`(このセッションのClaude Code設定)は、`settings.local.json`の中身を確認し、秘匿情報が含まれていないことを確認してから要否を判断する(必須ではない)。
+- 追加した後、忘れず:
+  ```powershell
+  git status
+  git commit -m "analysisフォルダ実体をgit管理下に追加(pyproject.toml/poetry.lock, 開発用ノートブック, yojitu)"
+  git push -u origin main
+  ```
+- **迷ったら一旦保留してよい**。今回の統合の必須条件は「タスクスケジューラ・batが壊れないこと」であり、ノートブック等の取り込みは同じタイミングでなくても後日まとめて行える。
+
+### Step 5. 動作確認
 - `run_shoki_seisansei.bat`など1つを手動でダブルクリックし、正常終了することを確認する(パスは何も変えていないので通常通り動くはず)。
 - 翌朝、タスクスケジューラの自動実行結果(`auto/logs/run_*.log`、`.gitignore`化済みなのでgit上は汚れない)を確認する。
 
-### Step 5. 重複解消
-- Step 3・4が安定していれば、`Z:\Users\suehara\Documents\GitHub\rz`のクローンは削除してよい(`analysis`が正になったため)。
+### Step 6. 重複解消
+- Step 4・5が安定していれば、`Z:\Users\suehara\Documents\GitHub\rz`のクローンは削除してよい(`analysis`が正になったため)。
 - 削除前に、`GitHub\rz`側だけにある未push差分がないか`git status`で最終確認する。
 
 ## 4. 統合作業とは別立てのフォローアップ課題
 
 - `★BQ-*.py`の`credentials.json`絶対パス(`auto\`が抜けている)の実態確認・修正。実際に`python_ss\credentials.json`(analysis直下)に置かれているのか、`auto\python_ss\credentials.json`に置かれているのか、まず現物を確認する。`token.pickle`同様に相対パス化するか、実態に合わせて`auto\`を補うか判断する。
-- `pyproject.toml`/`poetry.lock`がまだ本リポジトリに存在しない。root `.venv`(Poetry管理)の依存関係を再現可能にするため、統合作業のタイミングで`analysis`直下の実体をコミットするのが望ましい。
 - `転機ALLデータ更新.py`内に残る古い`C:\Users\suehara\Desktop\お転機BOX\ぱいそん練習\python_ss\credentials.json`パス(4箇所)は現状デッドコードの可能性が高いが、要否の確認・整理は別途。
+- (2026-08-17解決)`pyproject.toml`/`poetry.lock`未コミットの件はStep 4に組み込み済み。
 
 ## 5. ロールバック
 
