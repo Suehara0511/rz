@@ -3,8 +3,15 @@ __pycache__/
 .ipynb_checkpoints/
 *.pyc
 token.pickle
+token.json
 credentials.json
 client_secret*.json
 service_account*.json
 *.env
 auto/logs/
+
+# データファイル・キャッシュ(候補者・企業の実データを含みうるため追跡対象外)
+*.xlsx
+*.parquet
+~$*
+_pipeline_cache/
