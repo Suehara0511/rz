@@ -100,7 +100,4 @@ KPI管理スプレッドシート自体の構造(「合計」ブロックと「�
 ## 既知のTODO
 
 - 転機(候補者集客チャネル)MTGの議事録(Google Docs、831KB、複数回分の生VTTが1ドキュメントに連結)は経路Bでは取得不可。経路A方式(ローカルPython + Docs API、新規スコープでの認証)での取得を検討中。取得できたら `docs/tenki-kpi.md` を作成し、本ファイルから参照を追加する。
-- **【移行手順策定済み・実行待ち】ローカル2フォルダの統合(2026-08-17着手、同日タスクスケジューラXML確認済み)**: 現在、ローカルには以下2つのフォルダが並存しており、二重管理になっている。
-  - `Z:\Users\suehara\Documents\python\analysis`: 本来の作業フォルダ。`token.pickle`・`python_ss\credentials.json`・`.venv`が実在し、Windowsタスクスケジューラ(`RZ_run_*_daily`、計5タスク)の実行パスもこちらを指している。**git管理下にはない**。
-  - `Z:\Users\suehara\Documents\GitHub\rz`: 本リポジトリ(`suehara0511/rz`)のクローン。認証情報・`.venv`は含まれない(`.gitignore`除外)。ブラウザ版Claude Codeが参照するのはこちら。
-  - **統合方針・詳細手順**: [docs/local-folder-migration.md](docs/local-folder-migration.md)を参照。タスクスケジューラのCommand・各`.bat`内のPythonパス・各`★BQ-*.py`内のcredentials.jsonパスの3箇所すべてが`Z:\...\analysis\...`という同一の絶対パスに依存していることが判明したため、**`analysis`フォルダを新しい場所に作り直すのではなく、`analysis`フォルダ自体をそのままgit管理下に変換する(in-place化)**方針とした。この方針なら上記3箇所は一切変更不要。次回セッション(またはユーザー自身の手元作業)で、同ドキュメントのStep 0〜5に沿って移行を実施する。
+- (2026-08-17解決)ローカル2フォルダの統合: `Z:\Users\suehara\Documents\python\analysis`(本来の作業フォルダ、token.pickle・credentials.json・.venv実在、Windowsタスクスケジューラ5タスクの実行パスもここ)を、[docs/local-folder-migration.md](docs/local-folder-migration.md)の手順通りin-place化(`analysis`フォルダ自体をgit管理下に変換)して完了。タスクスケジューラ・`.bat`のパスは無変更のまま、`run_shoki_seisansei.bat`の実行で動作確認済み。重複していた`Z:\Users\suehara\Documents\GitHub\rz`クローンは削除。以後、ブラウザ版Claude Codeが参照する本リポジトリと、ローカルの実行環境は同一の`analysis`フォルダになった。
