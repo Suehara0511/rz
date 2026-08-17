@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Google_Drive__search_files",
+      "mcp__claude_ai_Google_Drive__get_file_metadata",
+      "mcp__claude_ai_Google_Drive__read_file_content",
+      "mcp__claude_ai_Google_Drive__download_file_content",
+      "PowerShell(Get-Content \"C:\\\\Users\\\\suehara\\\\.claude\\\\projects\\\\z--Users-suehara-Documents-python-analysis\\\\dfca1bc7-7006-438e-835e-e251f3f7f99d\\\\tool-results\\\\mcp-claude_ai_Google_Drive-read_file_content-1786655260265.txt\" -TotalCount 1 | ForEach-Object { $_.Substring\\(0, [Math]::Min\\(1500,$_.Length\\)\\) })"
+    ]
+  }
+}

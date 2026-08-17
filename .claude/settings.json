@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:sites.google.com)",
+      "PowerShell(& \"z:\\\\Users\\\\suehara\\\\Documents\\\\python\\\\analysis\\\\.venv\\\\Scripts\\\\python.exe\" -c \"import google.cloud.bigquery, gspread, googleapiclient, google.cloud.secretmanager; print\\('OK, all imports succeeded'\\)\" 2>&1)",
+      "PowerShell(& \"z:\\\\Users\\\\suehara\\\\Documents\\\\python\\\\analysis\\\\auto\\\\.venv\\\\Scripts\\\\python.exe\" -c \"import google.cloud.bigquery, gspread, googleapiclient, google.cloud.secretmanager; print\\('OK, all imports succeeded'\\)\" 2>&1)",
+      "PowerShell(\\(Get-Content \"z:\\\\Users\\\\suehara\\\\Documents\\\\python\\\\analysis\\\\★BQ-RZKPI更新.ipynb\" | Measure-Object -Line\\).Lines)",
+      "PowerShell(\\(Get-Content \"C:\\\\Users\\\\suehara\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\z--Users-suehara-Documents-python-analysis\\\\dfca1bc7-7006-438e-835e-e251f3f7f99d\\\\scratchpad\\\\ipynb_extracted.py\" | Measure-Object -Line\\).Lines)",
+      "PowerShell(\\(Get-Content \"Z:\\\\Users\\\\suehara\\\\Documents\\\\python\\\\analysis\\\\★BQ-営業生産性.ipynb\" | Measure-Object -Line\\).Lines)",
+      "PowerShell(\\(Get-Content \"C:\\\\Users\\\\suehara\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\z--Users-suehara-Documents-python-analysis\\\\dfca1bc7-7006-438e-835e-e251f3f7f99d\\\\scratchpad\\\\eigyo_seisansei_from_ipynb.py\" | Measure-Object -Line\\).Lines)",
+      "PowerShell(\\(Get-Content \"C:\\\\Users\\\\suehara\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\z--Users-suehara-Documents-python-analysis\\\\dfca1bc7-7006-438e-835e-e251f3f7f99d\\\\scratchpad\\\\eigyo_seisansei_from_ipynb.py\" -Encoding UTF8 | Measure-Object -Line\\).Lines)",
+      "Read(//c/Users/suehara/AppData/Local/Temp/**)",
+      "PowerShell(Remove-Item \"Z:\\\\Users\\\\suehara\\\\Documents\\\\python\\\\analysis\\\\auto\\\\_check_formulas.py\" -Force -Confirm:$false)",
+      "PowerShell(Remove-Item \"Z:\\\\Users\\\\suehara\\\\Documents\\\\python\\\\analysis\\\\auto\\\\__pycache__\\\\_check_formulas.cpython-311.pyc\" -Force -Confirm:$false -ErrorAction SilentlyContinue)"
+    ]
+  }
+}

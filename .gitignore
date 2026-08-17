@@ -1,0 +1,17 @@
+﻿.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+token.pickle
+token.json
+credentials.json
+client_secret*.json
+service_account*.json
+*.env
+auto/logs/
+
+# 繝・・繧ｿ繝輔ぃ繧､繝ｫ繝ｻ繧ｭ繝｣繝・す繝･(蛟呵｣懆・・莨∵･ｭ縺ｮ螳溘ョ繝ｼ繧ｿ繧貞性縺ｿ縺・ｋ縺溘ａ霑ｽ霍｡蟇ｾ雎｡螟・
+*.xlsx
+*.parquet
+~$*
+_pipeline_cache/
