@@ -1,5 +1,15 @@
 # ローカル2フォルダ統合 移行計画
 
+**【2026-08-17 完了】** 本ドキュメントの手順通り、`analysis`フォルダのin-place化が完了した。実際の作業では、Step 2の`git checkout`が「ほぼ全ファイルが衝突」というエラーで失敗したため(`analysis`側が完全に未コミットの状態で、大量の既存ファイルと一度に突き合わせようとしたため)、より安全な代替手順に切り替えた:
+
+1. `analysis`フォルダの中で`git init`し、まず`origin/main`の`.gitignore`を実体化してから(`git show origin/main:.gitignore | Out-File -Encoding utf8 .gitignore`)、`git add -A` → `git commit`で現状を1つのスナップショットコミットとして保存する(この時点で.gitignoreが正しく効いているか`git status --ignored`で必ず確認する)
+2. `git merge --allow-unrelated-histories origin/main`で本来の履歴と統合する(コンフリクトは`CLAUDE.md`と`.gitignore`のみで、`git checkout --theirs`でorigin側を採用して解決)
+3. `git push -u origin main`
+4. `run_shoki_seisansei.bat`の実行で動作確認 → 正常完了
+5. 重複していた`GitHub\rz`クローンは削除
+
+以下は実行前に立てた計画・調査内容(手順の一部は上記の通り実行時に修正された)。
+
 [CLAUDE.md](../CLAUDE.md)の「既知のTODO」記載、ローカル2フォルダ(`analysis`と`GitHub\rz`)統合の詳細調査・移行手順。2026-08-17、ユーザーがエクスポートしたタスクスケジューラ5タスクのXML(`RZ_run_*_daily`)を元に調査。
 
 ## 1. 現状整理
